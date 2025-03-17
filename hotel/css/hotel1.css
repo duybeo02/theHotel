@@ -1,0 +1,260 @@
+@import url('https://fonts.googleapis.com/css2?family=Arima:wght@100..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playwrite+GB+S:ital,wght@0,100..400;1,100..400&display=swap');
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html{
+    font-family: "Arima", serif;
+}
+
+#main{
+
+}
+
+#header{
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 50px;
+    background-color: #eff6e0;
+    border-bottom: 2px solid #ccc;
+}
+
+#nav {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+#nav li {
+    margin-right: 30px;
+}
+
+#nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+#nav a:hover {
+    color: #007bff;
+}
+
+#login {
+    display: flex;
+    align-items: center;
+}
+
+.login {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex; 
+}
+
+.login li {
+    margin-left: 15px; 
+}
+
+.login a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.login a:hover {
+    color: #0056b3;
+}
+
+
+.hotel-booking {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    padding: 30px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hotel-images {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.main-image {
+    width: 400px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.sub-images {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.sub-images img {
+    width: 120px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.hotel-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 400px;
+}
+
+.hotel-info h2 {
+    text-align: center;
+    color: #007bff;
+}
+
+.hotel-info label {
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.hotel-info input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.btn-book {
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+.btn-book:hover {
+    background: #0056b3;
+}
+.slider-title {
+    text-align: center;
+    width: 100%;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    display: block; /* Đảm bảo căn giữa */
+}
+
+.product-link {
+    text-decoration: none; /* Loại bỏ gạch chân */
+    color: inherit; /* Giữ nguyên màu chữ */
+}
+
+.product-row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap; /* Cho phép xuống dòng nếu màn hình nhỏ */
+}
+
+.product {
+    width: 400px;
+    text-align: center;
+    padding: 15px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.product img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.product:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 20px 50px;
+    border-top: 2px solid #ddd;
+    font-size: 16px;
+    color: #333;
+}
+
+.footer-left {
+    flex: 1;
+    max-width: 50%;
+}
+
+.footer-left a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer-left a:hover {
+    text-decoration: underline;
+}
+
+.footer-right {
+    text-align: right;
+}
+
+.footer-right h4 {
+    margin-bottom: 10px;
+}
+
+.footer-right a {
+    display: block;
+    color: #333;
+    text-decoration: none;
+    margin-bottom: 5px;
+}
+
+.footer-right a:hover {
+    color: #007bff;
+}
+
+.social-links {
+    margin-top: 15px;
+}
+
+.social-icon {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.social-icon img {
+    width: 30px;
+    height: 30px;
+    transition: transform 0.3s;
+}
+
+.social-icon img:hover {
+    transform: scale(1.1);
+}
+
