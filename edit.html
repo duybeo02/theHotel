@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Khách Sạn</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/edit.css">
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="text-center">Quản Lý Khách Sạn</h2>
+            <button class="btn btn-secondary" onclick="goBack()">🔙 Quay lại trang chủ</button>
+        </div>
+
+        <!-- Form nhập khách sạn -->
+        <form id="hotelForm" class="row g-3">
+            <div class="col-md-3">
+                <input type="text" id="hotelName" class="form-control" placeholder="Tên khách sạn" required>
+            </div>
+            <div class="col-md-2">
+                <input type="number" id="hotelPrice" class="form-control" placeholder="Giá" required>
+            </div>
+            <div class="col-md-2">
+                <input type="number" id="hotelQuantity" class="form-control" placeholder="Số lượng phòng" required>
+            </div>
+            <div class="col-md-3">
+                <input type="file" id="hotelImage" class="form-control" accept="image/*" required>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-success w-100">Thêm khách sạn</button>
+            </div>
+        </form>
+
+        <!-- Danh sách khách sạn -->
+        <table class="table table-bordered mt-4">
+            <thead class="table-dark text-center">
+                <tr>
+                    <th>STT</th>
+                    <th>Ảnh</th>
+                    <th>Tên khách sạn</th>
+                    <th>Giá</th>
+                    <th>Số lượng</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody id="hotelList" class="text-center"></tbody>
+        </table>
+    </div>
+
+    <script>
+        function goBack() {
+            window.location.href = "index.html"; 
+        }
+    </script>
+    <script src="script.js"></script>
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    let hotels = JSON.parse(localStorage.getItem("hotels")) || [];
+    const hotelForm = document.getElementById("hotelForm");
+    const hotelList = document.getElementById("hotelList");
+
+    function renderHotels() {
+        hotelList.innerHTML = "";
+        hotels.forEach((hotel, index) => {
+            hotelList.innerHTML += `
+                <tr>
+                    <td>${index + 1}</td>
+                    <td><img src="${hotel.image}" class="img-fluid"></td>
+                    <td>${hotel.name}</td>
+                    <td>${hotel.price} VND</td>
+                    <td>${hotel.quantity}</td>
+                    <td>
+                        <button class="btn btn-sm btn-edit" onclick="editHotel(${index})">Sửa</button>
+                        <button class="btn btn-sm btn-delete" onclick="deleteHotel(${index})">Xóa</button>
+                    </td>
+                </tr>
+            `;
+        });
+    }
+
+    hotelForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        const name = document.getElementById("hotelName").value;
+        const price = document.getElementById("hotelPrice").value;
+        const quantity = document.getElementById("hotelQuantity").value;
+        const imageInput = document.getElementById("hotelImage");
+        const image = imageInput.files[0];
+
+        if (image) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                hotels.push({ name, price, quantity, image: e.target.result });
+                localStorage.setItem("hotels", JSON.stringify(hotels));
+                renderHotels();
+                hotelForm.reset();
+            };
+            reader.readAsDataURL(image);
+        }
+    });
+
+    window.deleteHotel = function (index) {
+        hotels.splice(index, 1);
+        localStorage.setItem("hotels", JSON.stringify(hotels));
+        renderHotels();
+    };
+
+    window.editHotel = function (index) {
+        const newName = prompt("Nhập tên mới:", hotels[index].name);
+        const newPrice = prompt("Nhập giá mới:", hotels[index].price);
+        const newQuantity = prompt("Nhập số lượng mới:", hotels[index].quantity);
+
+        if (newName && newPrice && newQuantity) {
+            hotels[index].name = newName;
+            hotels[index].price = newPrice;
+            hotels[index].quantity = newQuantity;
+            localStorage.setItem("hotels", JSON.stringify(hotels));
+            renderHotels();
+        }
+    };
+
+    renderHotels();
+});
+
+</script>
+</html>
