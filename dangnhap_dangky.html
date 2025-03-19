@@ -39,30 +39,67 @@
 </body>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-    const loginForm = document.getElementById("loginForm");
-    const registerForm = document.getElementById("registerForm");
-    const loginBox = document.querySelector(".login");
-    const registerBox = document.querySelector(".register");
+        const loginForm = document.getElementById("loginForm");
+        const registerForm = document.getElementById("registerForm");
+        const loginBox = document.querySelector(".login");
+        const registerBox = document.querySelector(".register");
 
-    document.getElementById("showRegister").addEventListener("click", function () {
-        loginBox.classList.add("hidden");
-        registerBox.classList.remove("hidden");
+        document.getElementById("showRegister").addEventListener("click", function () {
+            loginBox.classList.add("hidden");
+            registerBox.classList.remove("hidden");
+        });
+
+        document.getElementById("showLogin").addEventListener("click", function () {
+            registerBox.classList.add("hidden");
+            loginBox.classList.remove("hidden");
+        });
+
+        // Lấy dữ liệu tài khoản từ LocalStorage
+        let users = JSON.parse(localStorage.getItem("users")) || [];
+
+        // Xử lý đăng ký
+        registerForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const username = document.getElementById("registerUsername").value;
+            const email = document.getElementById("registerEmail").value;
+            const password = document.getElementById("registerPassword").value;
+
+            // Kiểm tra tên đăng nhập đã tồn tại chưa
+            const userExists = users.some(user => user.username === username);
+            if (userExists) {
+                alert("Tên đăng nhập đã tồn tại. Vui lòng chọn tên khác!");
+                return;
+            }
+
+            // Thêm tài khoản vào danh sách
+            users.push({ username, email, password });
+            localStorage.setItem("users", JSON.stringify(users));
+
+            alert("Đăng ký thành công! Hãy đăng nhập.");
+            registerBox.classList.add("hidden");
+            loginBox.classList.remove("hidden");
+        });
+
+        // Xử lý đăng nhập
+        loginForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const username = document.getElementById("loginUsername").value;
+            const password = document.getElementById("loginPassword").value;
+
+            // Kiểm tra tài khoản có tồn tại không
+            const validUser = users.find(user => user.username === username && user.password === password);
+
+            if (!validUser) {
+                alert("Tài khoản hoặc mật khẩu không đúng hoặc chưa đăng ký!");
+                return;
+            }
+
+            // Nếu hợp lệ, chuyển trang
+            window.location.href = "edit.html";
+        });
     });
-
-    document.getElementById("showLogin").addEventListener("click", function () {
-        registerBox.classList.add("hidden");
-        loginBox.classList.remove("hidden");
-    });
-
-    loginForm.addEventListener("submit", function (event) {
-        event.preventDefault();
-        window.location.href = "file:///D:/TheHotel/edit.html";
-    });
-
-    registerForm.addEventListener("submit", function (event) {
-        event.preventDefault();
-    });
-});
-
 </script>
+
 </html>

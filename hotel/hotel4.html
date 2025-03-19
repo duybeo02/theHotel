@@ -10,7 +10,7 @@
     <div id="header">
         <ul id="nav">
             <li><a href="file:///D:/TheHotel/index.html">TRANG CHỦ</a></li>
-            <li><a href="">DỊCH VỤ</a></li>
+            <li><a href="file:///D:/TheHotel/dichvu.html">DỊCH VỤ</a></li>
             <li><a href="">KHUYẾN MÃI</a></li>
             <li><a href="">LIÊN HỆ</a></li>
         </ul>
@@ -35,14 +35,18 @@
         <div class="hotel-info">
             <h2>Đặt Khách Sạn Ngay</h2>
             <p class="hotel-name"><b>Ha Noi Memory Central Hotel</b></p>
-            <p class="hotel-price">Giá: <b>1.800.000 VNĐ / đêm</b></p>
+            <p class="hotel-price">Giá: <b id="pricePerNight">1.800.000</b> VNĐ / đêm</p>
+    
             <label for="checkin">Ngày nhận phòng:</label>
             <input type="date" id="checkin">
-            
+    
             <label for="checkout">Ngày trả phòng:</label>
             <input type="date" id="checkout">
-            
-            <button class="btn-book">Đặt ngay</button>
+    
+            <p>Tổng số ngày: <b id="totalDays">0</b></p>
+            <p>Tổng tiền: <b id="totalPrice">0</b> VNĐ</p>
+    
+            <button class="btn-book" onclick="bookHotel()">Đặt ngay</button>
         </div>
     </section>
     
@@ -106,4 +110,49 @@
     </div>
 
 </body>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const checkin = document.getElementById("checkin");
+        const checkout = document.getElementById("checkout");
+        const totalDays = document.getElementById("totalDays");
+        const totalPrice = document.getElementById("totalPrice");
+        const pricePerNight = 1800000;
+
+        function calculateTotal() {
+            const checkinDate = new Date(checkin.value);
+            const checkoutDate = new Date(checkout.value);
+
+            if (checkinDate && checkoutDate && checkoutDate > checkinDate) {
+                const days = Math.ceil((checkoutDate - checkinDate) / (1000 * 60 * 60 * 24));
+                totalDays.innerText = days;
+                totalPrice.innerText = (days * pricePerNight).toLocaleString("vi-VN");
+            } else {
+                totalDays.innerText = "0";
+                totalPrice.innerText = "0";
+            }
+        }
+
+        checkin.addEventListener("change", calculateTotal);
+        checkout.addEventListener("change", calculateTotal);
+
+        window.bookHotel = function () {
+            if (totalDays.innerText === "0") {
+                alert("Vui lòng chọn ngày nhận và trả phòng hợp lệ!");
+                return;
+            }
+
+            const bookingData = {
+                hotelName: "Ha Noi Memory Central Hotel",
+                checkinDate: checkin.value,
+                checkoutDate: checkout.value,
+                totalDays: totalDays.innerText,
+                totalPrice: totalPrice.innerText
+            };
+
+            localStorage.setItem("bookingData", JSON.stringify(bookingData));
+            window.location.href = "file:///D:/TheHotel/dichvu.html";
+        };
+    });
+</script>
+
 </html>

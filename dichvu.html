@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chọn Dịch Vụ</title>
+    <link rel="stylesheet" href="./assets/css/dichvu.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Chọn Dịch Vụ</h2>
+        <div class="services">
+            <div class="service-item">
+                <img src="./assets/img/buasang.png" alt="Bữa sáng">
+                <p>Bữa sáng</p>
+                <span>100.000 VNĐ</span>
+                <input type="checkbox" class="service" data-name="Bữa sáng" data-price="100000">
+            </div>
+
+            <div class="service-item">
+                <img src="./assets/img/oto.png" alt="Xe đưa đón sân bay">
+                <p>Xe đưa đón sân bay</p>
+                <span>200.000 VNĐ</span>
+                <input type="checkbox" class="service" data-name="Xe đưa đón" data-price="200000">
+            </div>
+
+            <div class="service-item">
+                <img src="./assets/img/spam.png" alt="Spa thư giãn">
+                <p>Spa thư giãn</p>
+                <span>300.000 VNĐ</span>
+                <input type="checkbox" class="service" data-name="Spa thư giãn" data-price="300000">
+            </div>
+
+            <div class="service-item">
+                <img src="./assets/img/uquanao.png" alt="Giặt ủi quần áo">
+                <p>Giặt ủi quần áo</p>
+                <span>150.000 VNĐ</span>
+                <input type="checkbox" class="service" data-name="Giặt ủi" data-price="150000">
+            </div>
+
+            <div class="service-item">
+                <img src="./assets/img/gym.png" alt="Phòng tập gym">
+                <p>Phòng tập gym</p>
+                <span>120.000 VNĐ</span>
+                <input type="checkbox" class="service" data-name="Phòng gym" data-price="120000">
+            </div>
+
+            <div class="service-item">
+                <img src="./assets/img/hoboi.png" alt="Hồ bơi">
+                <p>Hồ bơi</p>
+                <span>80.000 VNĐ</span>
+                <input type="checkbox" class="service" data-name="Hồ bơi" data-price="80000">
+            </div>
+        </div>
+
+        <p><b>Tổng tiền dịch vụ:</b> <span id="totalServicePrice">0</span> VNĐ</p>
+        <button onclick="confirmServices()">Xác nhận</button>
+        <button onclick="window.location.href='index.html'">Về trang chủ</button>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const checkboxes = document.querySelectorAll(".service");
+            const totalServicePrice = document.getElementById("totalServicePrice");
+
+            function updateTotal() {
+                let total = 0;
+                checkboxes.forEach(cb => {
+                    if (cb.checked) {
+                        total += parseInt(cb.getAttribute("data-price"));
+                    }
+                });
+                totalServicePrice.innerText = total.toLocaleString("vi-VN");
+            }
+
+            checkboxes.forEach(cb => {
+                cb.addEventListener("change", updateTotal);
+            });
+
+            window.confirmServices = function () {
+                const selectedServices = [];
+                checkboxes.forEach(cb => {
+                    if (cb.checked) {
+                        selectedServices.push({
+                            name: cb.getAttribute("data-name"),
+                            price: cb.getAttribute("data-price")
+                        });
+                    }
+                });
+
+                localStorage.setItem("selectedServices", JSON.stringify(selectedServices));
+                window.location.href = "confirmation.html";
+            };
+        });
+    </script>
+</body>
+</html>

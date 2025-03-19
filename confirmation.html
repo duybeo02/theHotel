@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xác nhận đặt phòng</title>
+</head>
+<body>
+    <h2>Xác nhận đặt phòng</h2>
+    <p><b>Khách sạn:</b> <span id="hotelName"></span></p>
+    <p><b>Ngày nhận phòng:</b> <span id="checkinDate"></span></p>
+    <p><b>Ngày trả phòng:</b> <span id="checkoutDate"></span></p>
+    <p><b>Tổng số ngày:</b> <span id="totalDays"></span></p>
+    <p><b>Tổng tiền phòng:</b> <span id="totalPrice"></span> VNĐ</p>
+
+    <h3>Dịch vụ đã chọn</h3>
+    <ul id="selectedServices"></ul>
+
+    <p><b>Tổng tiền dịch vụ:</b> <span id="serviceTotalPrice">0</span> VNĐ</p>
+    <p><b>Tổng tiền thanh toán:</b> <span id="finalTotalPrice">0</span> VNĐ</p>
+
+    <button onclick="confirmBooking()">Thanh Toán</button>
+    <button onclick="window.location.href='index.html'">Về trang chủ</button>
+
+    <script>
+        function confirmBooking() {
+            alert("🎉 Đặt phòng thành công! Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi.");
+            
+            // Chờ 2 giây rồi chuyển về trang chủ
+            setTimeout(function () {
+                window.location.href = "index.html";
+            }, 500);
+        }
+        document.addEventListener("DOMContentLoaded", function () {
+            const bookingData = JSON.parse(localStorage.getItem("bookingData"));
+            const selectedServices = JSON.parse(localStorage.getItem("selectedServices")) || [];
+
+            if (!bookingData) {
+                alert("Không có dữ liệu đặt phòng!");
+                window.location.href = "index.html";
+                return;
+            }
+
+            document.getElementById("hotelName").innerText = bookingData.hotelName;
+            document.getElementById("checkinDate").innerText = bookingData.checkinDate;
+            document.getElementById("checkoutDate").innerText = bookingData.checkoutDate;
+            document.getElementById("totalDays").innerText = bookingData.totalDays;
+            document.getElementById("totalPrice").innerText = bookingData.totalPrice;
+
+            const serviceList = document.getElementById("selectedServices");
+            let serviceTotal = 0;
+
+            selectedServices.forEach(service => {
+                const li = document.createElement("li");
+                li.textContent = `${service.name}: ${parseInt(service.price).toLocaleString("vi-VN")} VNĐ`;
+                serviceList.appendChild(li);
+                serviceTotal += parseInt(service.price);
+            });
+
+            document.getElementById("serviceTotalPrice").innerText = serviceTotal.toLocaleString("vi-VN");
+
+            const finalTotal = serviceTotal + parseInt(bookingData.totalPrice.replace(/\D/g, ''));
+            document.getElementById("finalTotalPrice").innerText = finalTotal.toLocaleString("vi-VN");
+        });
+    </script>
+</body>
+</html>
